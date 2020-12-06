@@ -30,7 +30,7 @@ const catchCourts = [
   { person: people.paul, court: courts.A, time: 20 },
 ];
 
-const loginJob = new CronJob('50 45 23 * * *', () => {
+const loginJob = new CronJob('50 59 23 * * *', () => {
   Object.entries(people).forEach(([name, person]) => {
     const formData = new FormData();
     formData.append('account', person.account);
@@ -54,7 +54,7 @@ const loginJob = new CronJob('50 45 23 * * *', () => {
   });
 });
 
-const catchBadmintonCourtJob = new CronJob('0 46 0 * * *', () => {
+const catchBadmintonCourtJob = new CronJob('00 00 00 * * *', () => {
   catchCourts.forEach(({ court, time, person }) => {
     fetch(
       `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${date}&BookingTime=${time}`,
