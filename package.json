@@ -1,0 +1,35 @@
+{
+  "name": "catch-badminton-court",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -r dotenv/config src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skyran1278/catch-badminton-court.git"
+  },
+  "author": "ran",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skyran1278/catch-badminton-court/issues"
+  },
+  "homepage": "https://github.com/skyran1278/catch-badminton-court#readme",
+  "dependencies": {
+    "cron": "^1.8.2",
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1"
+  },
+  "devDependencies": {
+    "@types/cron": "^1.7.2",
+    "@types/node-fetch": "^2.5.7",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^7.0.0",
+    "eslint-plugin-import": "^2.22.1",
+    "nodemon": "^2.0.6",
+    "prettier": "2.2.1"
+  }
+}
