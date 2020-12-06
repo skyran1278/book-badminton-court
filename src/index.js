@@ -10,80 +10,72 @@ const courts = {
   E: 87,
   F: 2225,
 };
+
 const people = {
-  paul: process.env.PAUL,
+  paul: {
+    session: process.env.PAUL_SESSION,
+    account: process.env.PAUL_ACCOUNT,
+    password: process.env.PAUL_PASSWORD,
+  },
 };
+
+// 欺騙伺服器用
+const userAgent =
+  'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1';
 
 // 每次需要修改的地方
 const date = '2020-12-13';
 const catchCourts = [
   { person: people.paul, court: courts.A, time: 19 },
-  // { person: people.paul, court: courts.A, time: 20 },
+  { person: people.paul, court: courts.A, time: 20 },
 ];
 
-const loginJob = new CronJob('0 43 14 * * *', () => {
-  Object.entries(people).forEach(([_, person]) => {
+const loginJob = new CronJob('50 45 23 * * *', () => {
+  Object.entries(people).forEach(([name, person]) => {
+    const formData = new FormData();
+    formData.append('account', person.account);
+    formData.append('pass', person.password);
+    formData.append('AccountCheck', 'true');
+    formData.append('isRemember', 'false');
+
     fetch(`http://nd01.allec.com.tw/MobileLogin/MobileLogin?tFlag=1`, {
       method: 'POST',
       body: formData,
-    }).then((res) => res.text());
+      headers: {
+        'User-Agent': userAgent,
+        Cookie: `ASP.NET_SessionId=${person.session}`,
+      },
+    })
+      .then((res) => res.text())
+      .then((body) => {
+        const data = body.split(',');
+        console.log(data[0] === '0' ? `${name} 登入成功` : `${name} 登入失敗`);
+      });
   });
 });
 
-const catchBadmintonCourtJob = new CronJob('0 44 14 * * *', () => {
+const catchBadmintonCourtJob = new CronJob('0 46 0 * * *', () => {
   catchCourts.forEach(({ court, time, person }) => {
     fetch(
       `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${date}&BookingTime=${time}`,
       {
         method: 'GET',
         headers: {
-          Host: 'nd01.allec.com.tw',
-          Connection: 'keep-alive',
-          'Upgrade-Insecure-Requests': 1,
-          'User-Agent':
-            'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-          Accept:
-            'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-          Referer:
-            'http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=2&PlaceType=1',
-          'Accept-Encoding': 'gzip, deflate',
-          'Accept-Language': 'zh-TW,zh;q=0.9,en-US;q=0.8,en;q=0.7,zh-CN;q=0.6',
-          Cookie: `ASP.NET_SessionId=${person}`,
+          'User-Agent': userAgent,
+          Cookie: `ASP.NET_SessionId=${person.session}`,
         },
       }
     )
       .then((res) => res.text())
-      .then((body) => console.log(body));
+      .then((body) =>
+        console.log(
+          /預約成功/.test(body)
+            ? `${court} ${time} 預約成功`
+            : `${court} ${time} 預約失敗`
+        )
+      );
   });
 });
 
 catchBadmintonCourtJob.start();
 loginJob.start();
-
-Object.entries(people).forEach(([_, person]) => {
-  fetch(`http://nd01.allec.com.tw/MobileLogin/MobileLogin?tFlag=1`, {
-    method: 'POST',
-    body: formData,
-  })
-    .then((res) => res.text())
-    .then((body) => {
-      const data = body.split(',');
-      console.log(data[0], data[1]);
-    });
-});
-
-catchCourts.forEach(({ court, time, person }) => {
-  fetch(
-    `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${date}&BookingTime=${time}`,
-    {
-      method: 'GET',
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1',
-        Cookie: `ASP.NET_SessionId=${person}`,
-      },
-    }
-  )
-    .then((res) => res.text())
-    .then((body) => console.log(body));
-});
