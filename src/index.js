@@ -17,6 +17,11 @@ const people = {
     account: process.env.PAUL_ACCOUNT,
     password: process.env.PAUL_PASSWORD,
   },
+  ariel: {
+    session: process.env.ARIEL_SESSION,
+    account: process.env.ARIEL_ACCOUNT,
+    password: process.env.ARIEL_PASSWORD,
+  },
 };
 
 // 欺騙伺服器用
@@ -28,6 +33,8 @@ const date = '2020-12-13';
 const catchCourts = [
   { person: people.paul, court: courts.A, time: 19 },
   { person: people.paul, court: courts.A, time: 20 },
+  { person: people.ariel, court: courts.B, time: 19 },
+  { person: people.ariel, court: courts.B, time: 20 },
 ];
 
 const loginJob = new CronJob('50 59 23 * * *', () => {
