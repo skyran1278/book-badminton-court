@@ -22,12 +22,12 @@ const people = {
 
 module.exports = {
   // 每次需要修改的地方
-  date: '2020-12-15',
+  date: '2020-12-18',
   catchCourts: [
-    { person: people.paul, court: courts.A, time: 15 },
-    { person: people.paul, court: courts.A, time: 16 },
-    { person: people.ariel, court: courts.B, time: 15 },
-    { person: people.ariel, court: courts.B, time: 16 },
+    { person: people.paul, court: courts.C, time: 19 },
+    { person: people.paul, court: courts.C, time: 20 },
+    { person: people.ariel, court: courts.F, time: 19 },
+    { person: people.ariel, court: courts.F, time: 20 },
   ],
   people,
 };
