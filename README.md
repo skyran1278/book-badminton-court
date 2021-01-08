@@ -1,4 +1,4 @@
-# catch-badminton-court
+# book-badminton-court
 
 他們是用中央控管的 session id 進行管理
 所以需要先登入，讓 session id 登入進他們的資料庫

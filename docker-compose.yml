@@ -1,8 +1,9 @@
 version: '3'
 
 services:
-  catchbadmintoncourt:
-    image: catchbadmintoncourt
+  book-badminton-court:
+    container_name: book-badminton-court
+    image: book-badminton-court
     build:
       context: .
       dockerfile: ./Dockerfile
