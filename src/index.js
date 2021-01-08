@@ -2,8 +2,9 @@ const { CronJob } = require('cron');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
 const add = require('date-fns/add');
+const format = require('date-fns/format');
 
-const { people, catchCourts } = require('./config');
+const { people, bookCourts } = require('./config');
 
 // 欺騙伺服器用
 const userAgent =
@@ -33,12 +34,12 @@ const loginJob = new CronJob('50 59 23 * * 4', () => {
   });
 });
 
-const catchBadmintonCourtJob = new CronJob('00 00 00 * * 5', () => {
-  const catchDate = add(new Date(), { days: 7 });
+const bookBadmintonCourtJob = new CronJob('00 00 00 * * 5', () => {
+  const bookDate = format(add(new Date(), { days: 7 }), 'yyyy-MM-dd');
 
-  catchCourts.forEach(({ court, time, person }) => {
+  bookCourts.forEach(({ court, time, person }) => {
     fetch(
-      `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${catchDate}&BookingTime=${time}`,
+      `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${bookDate}&BookingTime=${time}`,
       {
         method: 'GET',
         headers: {
@@ -58,5 +59,5 @@ const catchBadmintonCourtJob = new CronJob('00 00 00 * * 5', () => {
   });
 });
 
-catchBadmintonCourtJob.start();
+bookBadmintonCourtJob.start();
 loginJob.start();

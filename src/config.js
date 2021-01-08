@@ -21,7 +21,7 @@ const people = {
 };
 
 module.exports = {
-  catchCourts: [
+  bookCourts: [
     { person: people.paul, court: courts.C, time: 19 },
     { person: people.paul, court: courts.D, time: 19 },
     { person: people.ariel, court: courts.F, time: 19 },
