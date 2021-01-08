@@ -1,13 +1,15 @@
 const { CronJob } = require('cron');
 const fetch = require('node-fetch');
 const FormData = require('form-data');
-const { people, date, catchCourts } = require('./config');
+const add = require('date-fns/add');
+
+const { people, catchCourts } = require('./config');
 
 // 欺騙伺服器用
 const userAgent =
   'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1';
 
-const loginJob = new CronJob('50 59 23 * * *', () => {
+const loginJob = new CronJob('50 59 23 * * 4', () => {
   Object.entries(people).forEach(([name, person]) => {
     const formData = new FormData();
     formData.append('account', person.account);
@@ -31,10 +33,12 @@ const loginJob = new CronJob('50 59 23 * * *', () => {
   });
 });
 
-const catchBadmintonCourtJob = new CronJob('00 00 00 * * *', () => {
+const catchBadmintonCourtJob = new CronJob('00 00 00 * * 5', () => {
+  const catchDate = add(new Date(), { days: 7 });
+
   catchCourts.forEach(({ court, time, person }) => {
     fetch(
-      `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${date}&BookingTime=${time}`,
+      `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${catchDate}&BookingTime=${time}`,
       {
         method: 'GET',
         headers: {
