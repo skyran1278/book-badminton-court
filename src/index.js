@@ -53,7 +53,7 @@ const bookBadmintonCourtJob = new CronJob('00 00 00 * * 5', () => {
         console.log(
           /預約成功/.test(body)
             ? `${court} ${time} 預約成功`
-            : `${court} ${time} 預約失敗`
+            : `${court} ${time} 預約失敗\n${body}`
         )
       );
   });
@@ -61,3 +61,5 @@ const bookBadmintonCourtJob = new CronJob('00 00 00 * * 5', () => {
 
 bookBadmintonCourtJob.start();
 loginJob.start();
+
+console.log('cron started');
