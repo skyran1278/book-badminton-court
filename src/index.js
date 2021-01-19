@@ -60,18 +60,14 @@ const bookBadmintonCourt = () => {
   });
 };
 
-const bookBadmintonCourt00Job = new CronJob(
+const bookBadmintonCourtJobs = [
   '00 00 00 * * *',
-  bookBadmintonCourt
-);
-
-const bookBadmintonCourt01Job = new CronJob(
   '01 00 00 * * *',
-  bookBadmintonCourt
-);
+  '02 00 00 * * *',
+  '05 00 00 * * *',
+].map((cronTime) => new CronJob(cronTime, bookBadmintonCourt));
 
 loginJob.start();
-bookBadmintonCourt00Job.start();
-bookBadmintonCourt01Job.start();
+bookBadmintonCourtJobs.forEach((job) => job.start());
 
 console.log('cron started');
