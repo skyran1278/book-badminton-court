@@ -5,6 +5,12 @@ const courts = {
   D: 1075,
   E: 87,
   F: 2225,
+  83: 'A',
+  84: 'B',
+  1074: 'C',
+  1075: 'D',
+  87: 'E',
+  2225: 'F',
 };
 
 const people = {
@@ -30,4 +36,5 @@ module.exports = {
     { person: people.paul, court: courts.D, time: 20 },
   ],
   people,
+  courts,
 };

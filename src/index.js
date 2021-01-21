@@ -4,16 +4,15 @@ const FormData = require('form-data');
 const add = require('date-fns/add');
 const format = require('date-fns/format');
 
-const { people, bookCourts } = require('./config');
+const { people, bookCourts, courts } = require('./config');
 
 // 欺騙伺服器用
 const userAgent =
   'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1';
 
-let bookDate;
+let bookDate = format(add(new Date(), { days: 7 }), 'yyyy-MM-dd');
 
-const loginJob = new CronJob('50 59 23 * * *', () => {
-  bookDate = format(add(new Date(), { days: 8 }), 'yyyy-MM-dd');
+const login = () => {
   Object.entries(people).forEach(([name, person]) => {
     const formData = new FormData();
     formData.append('account', person.account);
@@ -35,7 +34,7 @@ const loginJob = new CronJob('50 59 23 * * *', () => {
         console.log(data[0] === '0' ? `${name} 登入成功` : `${name} 登入失敗`);
       });
   });
-});
+};
 
 const bookBadmintonCourt = () => {
   bookCourts.forEach(({ court, time, person }) => {
@@ -54,19 +53,23 @@ const bookBadmintonCourt = () => {
         const bookingTime = format(new Date(), 'yyyy-MM-dd-HH-mm-ss-SSS');
         console.log(
           /預約成功/.test(body)
-            ? `${bookDate} ${court} ${time} 預約成功 ${bookingTime}`
-            : `${bookDate} ${court} ${time} 預約失敗 ${bookingTime}\n${body}`
+            ? `${bookDate} ${courts[court]} ${time} 預約成功 ${bookingTime}`
+            : `${bookDate} ${courts[court]} ${time} 預約失敗 ${bookingTime}`
         );
       });
   });
 };
+
+const loginJob = new CronJob('50 59 23 * * *', () => {
+  bookDate = format(add(new Date(), { days: 8 }), 'yyyy-MM-dd');
+  login();
+});
 
 const bookBadmintonCourtJobs = [
   '59 59 23 * * *',
   '00 00 00 * * *',
   '01 00 00 * * *',
   '02 00 00 * * *',
-  '05 00 00 * * *',
 ].map((cronTime) => new CronJob(cronTime, bookBadmintonCourt));
 
 loginJob.start();
