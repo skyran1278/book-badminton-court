@@ -10,7 +10,10 @@ const { people, bookCourts } = require('./config');
 const userAgent =
   'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1';
 
-const loginJob = new CronJob('50 59 23 * * 4', () => {
+let bookDate;
+
+const loginJob = new CronJob('50 59 23 * * *', () => {
+  bookDate = format(add(new Date(), { days: 8 }), 'yyyy-MM-dd');
   Object.entries(people).forEach(([name, person]) => {
     const formData = new FormData();
     formData.append('account', person.account);
@@ -35,8 +38,6 @@ const loginJob = new CronJob('50 59 23 * * 4', () => {
 });
 
 const bookBadmintonCourt = () => {
-  const bookDate = format(add(new Date(), { days: 7 }), 'yyyy-MM-dd');
-
   bookCourts.forEach(({ court, time, person }) => {
     fetch(
       `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${bookDate}&BookingTime=${time}`,
@@ -61,11 +62,11 @@ const bookBadmintonCourt = () => {
 };
 
 const bookBadmintonCourtJobs = [
-  '55 59 23 * * 4',
-  '59 59 23 * * 4',
-  '00 00 00 * * 5',
-  '01 00 00 * * 5',
-  '05 00 00 * * 5',
+  '59 59 23 * * *',
+  '00 00 00 * * *',
+  '01 00 00 * * *',
+  '02 00 00 * * *',
+  '05 00 00 * * *',
 ].map((cronTime) => new CronJob(cronTime, bookBadmintonCourt));
 
 loginJob.start();
