@@ -37,6 +37,8 @@ const login = () => {
 };
 
 const bookBadmintonCourt = () => {
+  const startTime = format(new Date(), 'yyyy-MM-dd-HH-mm-ss-SSS');
+
   bookCourts.forEach(({ court, time, person }) => {
     fetch(
       `http://nd01.allec.com.tw/MobilePlace/MobilePlace?tFlag=3&PlaceType=1&BookingPlaceID=${court}&BookingDate=${bookDate}&BookingTime=${time}`,
@@ -53,23 +55,25 @@ const bookBadmintonCourt = () => {
         const bookingTime = format(new Date(), 'yyyy-MM-dd-HH-mm-ss-SSS');
         console.log(
           /預約成功/.test(body)
-            ? `${bookDate} ${courts[court]} ${time} 預約成功 ${bookingTime}`
-            : `${bookDate} ${courts[court]} ${time} 預約失敗 ${bookingTime}`
+            ? `${bookDate} ${courts[court]} ${time} 預約成功 ${startTime} ${bookingTime}`
+            : `${bookDate} ${courts[court]} ${time} 預約失敗 ${startTime} ${bookingTime}`
         );
       });
   });
 };
 
-const loginJob = new CronJob('50 59 23 * * *', () => {
+const loginJob = new CronJob('50 59 23 * * 4', () => {
   bookDate = format(add(new Date(), { days: 8 }), 'yyyy-MM-dd');
   login();
 });
 
 const bookBadmintonCourtJobs = [
-  '59 59 23 * * *',
-  '00 00 00 * * *',
-  '01 00 00 * * *',
-  '02 00 00 * * *',
+  '59 59 23 * * 4',
+  '00 00 00 * * 5',
+  '01 00 00 * * 5',
+  '02 00 00 * * 5',
+  '05 00 00 * * 5',
+  '10 00 00 * * 5',
 ].map((cronTime) => new CronJob(cronTime, bookBadmintonCourt));
 
 loginJob.start();
