@@ -62,18 +62,17 @@ const bookBadmintonCourt = () => {
   });
 };
 
-const loginJob = new CronJob('50 59 23 * * 4', () => {
+const loginJob = new CronJob('50 59 23 * * 0', () => {
   bookDate = format(add(new Date(), { days: 8 }), 'yyyy-MM-dd');
   login();
 });
 
 const bookBadmintonCourtJobs = [
-  '59 59 23 * * 4',
-  '00 00 00 * * 5',
-  '01 00 00 * * 5',
-  '02 00 00 * * 5',
-  '05 00 00 * * 5',
-  '10 00 00 * * 5',
+  '59 59 23 * * 0',
+  '00 00 00 * * 1',
+  '01 00 00 * * 1',
+  '02 00 00 * * 1',
+  '05 00 00 * * 1',
 ].map((cronTime) => new CronJob(cronTime, bookBadmintonCourt));
 
 loginJob.start();
