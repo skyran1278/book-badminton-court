@@ -31,4 +31,4 @@ const login = () => {
   });
 };
 
-exports.login = login;
+module.exports = login;

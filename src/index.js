@@ -1,7 +1,7 @@
 const { job } = require('cron');
 
-const { bookBadmintonCourt } = require('./bookBadmintonCourt');
-const { login } = require('./login');
+const bookBadmintonCourt = require('./bookBadmintonCourt');
+const login = require('./login');
 const { bookDay } = require('./config');
 
 job({

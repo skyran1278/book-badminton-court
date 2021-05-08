@@ -33,4 +33,4 @@ const bookBadmintonCourt = () => {
   });
 };
 
-exports.bookBadmintonCourt = bookBadmintonCourt;
+module.exports = bookBadmintonCourt;
