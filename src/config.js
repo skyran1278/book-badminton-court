@@ -28,11 +28,28 @@ const people = {
 
 module.exports = {
   bookCourts: [
-    { person: people.paul, court: courts.D, time: 19 },
-    { person: people.paul, court: courts.D, time: 19 },
-    { person: people.ariel, court: courts.F, time: 19 },
-    { person: people.ariel, court: courts.F, time: 20 },
+    {
+      person: people.paul,
+      court: courts[process.env.PAUL_COURT_1],
+      time: process.env.PAUL_TIME_1,
+    },
+    {
+      person: people.paul,
+      court: courts[process.env.PAUL_COURT_2],
+      time: process.env.PAUL_TIME_2,
+    },
+    {
+      person: people.ariel,
+      court: courts[process.env.ARIEL_COURT_1],
+      time: process.env.ARIEL_TIME_1,
+    },
+    {
+      person: people.ariel,
+      court: courts[process.env.ARIEL_COURT_2],
+      time: process.env.ARIEL_TIME_2,
+    },
   ],
   people,
   courts,
+  bookDay: parseInt(process.env.BOOK_DAY, 10),
 };
