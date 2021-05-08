@@ -8,7 +8,7 @@ const userAgent =
 
 const bookBadmintonCourt = () => {
   const bookDate = format(add(new Date(), { days: 7 }), 'yyyy-MM-dd');
-  const startTime = format(new Date(), 'yyyy-MM-dd-HH-mm-ss-SSS');
+  const startTime = format(new Date(), 'yyyy-MM-dd-HH:mm:ss.SSS');
 
   bookCourts.forEach(({ court, time, person }) => {
     fetch(
@@ -23,7 +23,7 @@ const bookBadmintonCourt = () => {
     )
       .then((res) => res.text())
       .then((body) => {
-        const bookingTime = format(new Date(), 'yyyy-MM-dd-HH-mm-ss-SSS');
+        const bookingTime = format(new Date(), 'yyyy-MM-dd-HH:mm:ss.SSS');
         console.log(
           /預約成功/.test(body)
             ? `${bookDate} ${person.account} ${courts[court]} ${time} 預約成功 ${startTime} ${bookingTime}`
