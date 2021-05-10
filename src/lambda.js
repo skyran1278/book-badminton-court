@@ -6,6 +6,9 @@ const login = require('./login');
 // 第一次會先失敗、然後 login
 // 第二次會成功
 exports.booking = () => {
-  bookBadmintonCourt();
   login();
+  const bookInterval = setInterval(bookBadmintonCourt, 1000);
+  setTimeout(() => {
+    clearInterval(bookInterval);
+  }, 60000);
 };
