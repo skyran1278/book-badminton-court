@@ -22,7 +22,7 @@ export class BookBadmintonCourtStack extends cdk.Stack {
           PASSWORDS: process.env.PASSWORDS || "",
           COURT_NAMES: process.env.COURT_NAMES || "",
           COURT_TIMES: process.env.COURT_TIMES || "",
-          BEARER_TOKEN: process.env.BEARER_TOKEN || "",
+          LINE_BEARER_TOKEN: process.env.LINE_BEARER_TOKEN || "",
         },
         timeout: cdk.Duration.seconds(60),
       }
