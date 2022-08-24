@@ -17,6 +17,7 @@ export class BookBadmintonCourtStack extends cdk.Stack {
         handler: "src/lambda.booking",
         code: lambda.Code.fromAsset(path.join(__dirname, "lambda")),
         environment: {
+          NAMES: process.env.NAMES || "",
           SESSIONS: process.env.SESSIONS || "",
           ACCOUNTS: process.env.ACCOUNTS || "",
           PASSWORDS: process.env.PASSWORDS || "",
