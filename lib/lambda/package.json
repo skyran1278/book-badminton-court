@@ -1,8 +1,8 @@
 {
   "name": "book-badminton-court",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "start": "nodemon -r dotenv/config src/index.js -- dotenv_config_path=../../.env dotenv_config_debug=true",
     "test": "echo \"Error: no test specified\" && exit 1"
