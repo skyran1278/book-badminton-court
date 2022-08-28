@@ -25,7 +25,7 @@ export class BookBadmintonCourtStack extends cdk.Stack {
           COURT_TIMES: process.env.COURT_TIMES || "",
           LINE_BEARER_TOKEN: process.env.LINE_BEARER_TOKEN || "",
         },
-        timeout: cdk.Duration.seconds(60),
+        timeout: cdk.Duration.seconds(70),
       }
     );
 
@@ -33,11 +33,11 @@ export class BookBadmintonCourtStack extends cdk.Stack {
 
     new Rule(this, "ScheduleRule", {
       // schedule: Schedule.cron({
-      //   minute: "45",
-      //   hour: "8",
-      //   weekDay: "2",
+      //   minute: "22",
+      //   hour: "12",
+      //   weekDay: "SUN",
       // }),
-      schedule: Schedule.cron({ minute: "59", hour: "15", weekDay: "5" }),
+      schedule: Schedule.cron({ minute: "59", hour: "15", weekDay: "THU" }),
       targets: [lambdaTarget],
     });
   }
