@@ -25,7 +25,7 @@ export class BookBadmintonCourtStack extends cdk.Stack {
           COURT_TIMES: process.env.COURT_TIMES || "",
           LINE_BEARER_TOKEN: process.env.LINE_BEARER_TOKEN || "",
         },
-        timeout: cdk.Duration.seconds(90),
+        timeout: cdk.Duration.seconds(80),
       }
     );
 
