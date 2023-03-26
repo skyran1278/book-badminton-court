@@ -21,8 +21,6 @@ export class BookBadmintonCourtStack extends cdk.Stack {
           SESSIONS: process.env.SESSIONS || "",
           ACCOUNTS: process.env.ACCOUNTS || "",
           PASSWORDS: process.env.PASSWORDS || "",
-          COURT_NAMES: process.env.COURT_NAMES || "",
-          COURT_TIMES: process.env.COURT_TIMES || "",
           LINE_BEARER_TOKEN: process.env.LINE_BEARER_TOKEN || "",
         },
         timeout: cdk.Duration.seconds(80),
